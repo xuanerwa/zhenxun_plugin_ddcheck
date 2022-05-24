@@ -1,0 +1,2 @@
+jinja2
+nonebot_plugin_htmlrender
