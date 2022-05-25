@@ -77,7 +77,7 @@ async def get_uid_by_name(name: str) -> int:
     url = "http://api.bilibili.com/x/web-interface/search/type"
     params = {"search_type": "bili_user", "keyword": name}
     try:
-        resp = await AsyncHttpx.get(url, params=params, timeout=10)
+        resp = await AsyncHttpx.get(url, params=params)
         result = resp.json()
         for user in result["data"]["result"]:
             if user["uname"] == name:
@@ -92,7 +92,7 @@ async def get_user_info(uid: int) -> dict:
     url = "https://account.bilibili.com/api/member/getCardByMid"
     params = {"mid": uid}
     try:
-        resp = await AsyncHttpx.get(url, params=params, timeout=10)
+        resp = await AsyncHttpx.get(url, params=params)
         result = resp.json()
         return result["card"]
     except (KeyError, IndexError) as e:
