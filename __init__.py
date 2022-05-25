@@ -12,10 +12,10 @@ __zx_plugin_name__ = "成分姬"
 __plugin_usage__ = """
 usage：
 查成分 {用户名/UID}
-示例：查成分 小南莓Official
+示例：查成分 陈睿
 """.strip()
 __plugin_des__ = "成分姬"
-__plugin_type__ = ("一些工具")
+__plugin_type__ = ("一些工具",)
 __plugin_cmd__ = ["查成分 {用户名/UID}"]
 __plugin_author__ = "yajiwa"
 

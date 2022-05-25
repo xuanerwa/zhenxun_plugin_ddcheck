@@ -23,7 +23,7 @@ async def update_vtb_list():
 
     for url in urls:
         try:
-            resp = await AsyncHttpx.get(url, timeout=20)
+            resp = await AsyncHttpx.get(url)
             result = resp.json()
             if not result:
                 continue
@@ -172,7 +172,15 @@ async def get_reply(name: str) -> Union[str, bytes]:
     template_path = data_path / "info.html"
     if not template_path.exists():
         url = "https://ghproxy.com/https://raw.githubusercontent.com/noneplugin/nonebot-plugin-ddcheck/main/nonebot_plugin_ddcheck/template/info.html"
-        await AsyncHttpx.download_file(url, template_path, timeout=10)
+        try:
+            await AsyncHttpx.download_file(url, template_path)
+        except:
+            try:
+                await AsyncHttpx.download_file(
+                    "https://raw.githubusercontent.com/noneplugin/nonebot-plugin-ddcheck/main/nonebot_plugin_ddcheck/template/info.html",
+                    template_path)
+            except:
+                return "获取资源失败，请检查网路"
     env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(data_path), enable_async=True
     )
