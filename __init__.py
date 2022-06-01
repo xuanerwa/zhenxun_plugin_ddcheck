@@ -5,7 +5,7 @@ from nonebot.params import CommandArg
 from nonebot.adapters.onebot.v11 import Message, MessageSegment
 from nonebot.log import logger
 from configs.config import Config
-
+from configs.path_config import DATA_PATH
 from .data_source import get_reply
 
 __zx_plugin_name__ = "成分姬"
@@ -16,6 +16,7 @@ usage：
 """.strip()
 __plugin_des__ = "成分姬"
 __plugin_type__ = ("一些工具",)
+__plugin_version__ = 0.3
 __plugin_cmd__ = ["查成分 {用户名/UID}"]
 __plugin_author__ = "yajiwa"
 
@@ -24,6 +25,9 @@ __plugin_settings__ = {
     "default_status": True,
     "limit_superuser": False,
     "cmd": ["查成分 {用户名/UID}"],
+}
+__plugin_resources__ = {
+    "ddcheck": DATA_PATH
 }
 Config.add_plugin_config(
     "ddcheck",

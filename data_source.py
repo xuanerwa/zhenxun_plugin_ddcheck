@@ -9,7 +9,6 @@ from nonebot_plugin_htmlrender import html_to_pic
 from configs.config import Config
 
 data_path = DATA_PATH / "ddcheck"
-data_path.mkdir(parents=True, exist_ok=True)
 vtb_list_path = data_path / "vtb_list.json"
 
 
@@ -173,13 +172,14 @@ async def get_reply(name: str) -> Union[str, bytes]:
     if not template_path.exists():
         url = "https://ghproxy.com/https://raw.githubusercontent.com/noneplugin/nonebot-plugin-ddcheck/main/nonebot_plugin_ddcheck/template/info.html"
         try:
-            await AsyncHttpx.download_file(url, template_path)
+            await AsyncHttpx.download_file(url, template_path, stream=True)
         except:
             try:
                 await AsyncHttpx.download_file(
                     "https://raw.githubusercontent.com/noneplugin/nonebot-plugin-ddcheck/main/nonebot_plugin_ddcheck/template/info.html",
-                    template_path)
+                    template_path, stream=True)
             except:
+                logger.warning("获取资源失败，请检查网路")
                 return "获取资源失败，请检查网路"
     env = jinja2.Environment(
         loader=jinja2.FileSystemLoader(data_path), enable_async=True
