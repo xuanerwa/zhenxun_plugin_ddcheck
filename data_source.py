@@ -1,3 +1,4 @@
+import math
 import json
 from utils.http_utils import AsyncHttpx
 import jinja2
@@ -167,6 +168,7 @@ async def get_reply(name: str) -> Union[str, bytes]:
         "follows": user_info["attention"],
         "percent": f"{percent:.2f}% ({vtbs_num}/{follows_num})",
         "vtbs": vtbs,
+        "num_per_col": 100 if vtbs_num == 0 else math.ceil(vtbs_num / math.ceil(vtbs_num / 100)),
     }
     template_path = data_path / "info.html"
     if not template_path.exists():

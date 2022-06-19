@@ -16,7 +16,7 @@ usage：
 """.strip()
 __plugin_des__ = "成分姬"
 __plugin_type__ = ("一些工具",)
-__plugin_version__ = 0.3
+__plugin_version__ = 0.4
 __plugin_cmd__ = ["查成分 {用户名/UID}"]
 __plugin_author__ = "yajiwa"
 
