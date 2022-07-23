@@ -142,7 +142,12 @@ async def get_reply(name: str) -> Union[str, bytes]:
         uid = await get_uid_by_name(name)
     user_info = await get_user_info(uid)
     if not user_info:
-        return "获取用户信息失败，请检查名称或稍后再试"
+        return "获取用户信息失败，请检查名称或使用uid查询"
+
+    attentions = user_info.get("attentions", [])
+    follows_num = int(user_info["attention"])
+    if not attentions and follows_num:
+        return "获取用户关注列表失败，关注列表可能未公开"
 
     vtb_list = await get_vtb_list()
     if not vtb_list:
@@ -152,23 +157,21 @@ async def get_reply(name: str) -> Union[str, bytes]:
     medal_dict = {medal["target_name"]: medal for medal in medals}
 
     vtb_dict = {info["mid"]: info for info in vtb_list}
-    vtbs = [
-        info for uid, info in vtb_dict.items() if uid in user_info.get("attentions", [])
-    ]
+    vtbs = [info for uid, info in vtb_dict.items() if uid in attentions]
     vtbs = [format_vtb_info(info, medal_dict) for info in vtbs]
 
-    follows_num = int(user_info["attention"])
     vtbs_num = len(vtbs)
     percent = vtbs_num / follows_num * 100 if follows_num else 0
+    num_per_col = math.ceil(vtbs_num / math.ceil(vtbs_num / 100)) if vtbs_num else 1
     result = {
         "name": user_info["name"],
         "uid": user_info["mid"],
         "face": user_info["face"],
         "fans": user_info["fans"],
-        "follows": user_info["attention"],
+        "follows": follows_num,
         "percent": f"{percent:.2f}% ({vtbs_num}/{follows_num})",
         "vtbs": vtbs,
-        "num_per_col": 100 if vtbs_num == 0 else math.ceil(vtbs_num / math.ceil(vtbs_num / 100)),
+        "num_per_col": num_per_col,
     }
     template_path = data_path / "info.html"
     if not template_path.exists():

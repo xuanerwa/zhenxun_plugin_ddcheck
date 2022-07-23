@@ -1,2 +1,2 @@
 jinja2
-nonebot_plugin_htmlrender
+nonebot_plugin_htmlrender>=0.0.4

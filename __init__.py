@@ -16,9 +16,9 @@ usage：
 """.strip()
 __plugin_des__ = "成分姬"
 __plugin_type__ = ("一些工具",)
-__plugin_version__ = 0.4
+__plugin_version__ = 0.5
 __plugin_cmd__ = ["查成分 {用户名/UID}"]
-__plugin_author__ = "yajiwa"
+__plugin_author__ = "MeetWq"
 
 __plugin_settings__ = {
     "level": 5,
@@ -33,7 +33,7 @@ Config.add_plugin_config(
     "ddcheck",
     "BILIBILI_COOKIE",
     "",
-    help_="若要显示主播牌子，需要在添加任意的B站用户cookie"
+    help_="若要显示主播牌子，需要添加任意的B站用户cookie"
 )
 ddcheck = on_command("查成分", block=True, priority=5)
 
