@@ -76,8 +76,9 @@ async def get_vtb_list() -> List[dict]:
 async def get_uid_by_name(name: str) -> int:
     url = "http://api.bilibili.com/x/web-interface/search/type"
     params = {"search_type": "bili_user", "keyword": name}
+    headers = {"cookie": Config.get_config("ddcheck", "BILIBILI_COOKIE")}
     try:
-        resp = await AsyncHttpx.get(url, params=params)
+        resp = await AsyncHttpx.get(url, params=params, headers=headers)
         result = resp.json()
         for user in result["data"]["result"]:
             if user["uname"] == name:
